@@ -7,7 +7,7 @@ import ProfilePage from './ProfilePage'
 import RegisterForm from './Register'
 import CreatePost from './CreatePost'
 // import MessageForm from './Messages'
-// import SentMessages from './CreateMessage'
+import SendMessage from './CreateMessage'
 
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import {useState, useEffect} from 'react'
@@ -19,6 +19,8 @@ function App() {
   const [token, setToken] = useState('');
   const [user, setUser] = useState({username: '', password: ''});
 
+  //function runs everytime there is a rerender. once initially when component first loads and again whenever a change is made
+  //by making the useEffect() function an async function, it automatically returns a Promise 
   useEffect(() => {
     if(localStorage.getItem('token')) {
       setToken(localStorage.getItem('token'));
@@ -29,11 +31,15 @@ function App() {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       })
+      //The then() method returns a Promise
       .then((response) => {
         return response.json();
       })
       .then((userInfo) => {
         setUser(userInfo.data)
+      })
+      .then(result => {
+        console.log(result);
       })
       .catch ((error) => {
         console.error(error);
@@ -45,15 +51,14 @@ function App() {
 
   //FUNCTION TO Logout
   const Logout = () => {
-    console.log('LOGOUT')
     setUser({
       username: '', 
       //email: '',
       password: ''
     });
     //clear localStorage
-    localStorage.removeItem(token);
-    console.log('LOGOUT TOKEN: ', token)
+    localStorage.removeItem('token');
+    console.log('LOGOUT')
   }
 
   return (
@@ -64,17 +69,13 @@ function App() {
         <div className="content">
           <Routes>
             <Route exact path="/home" element={<HomePage />}></Route>
-            <Route exact path="/createPost" element={<CreatePost token={token}/>}></Route>
-            {/* <Route exact path="/messages">
-              <MessageForm />
-            </Route> */}
-            <Route exact path="/posts" element={<Posts/>}></Route>
+            <Route exact path="/createPost" element={<CreatePost token={token} />}></Route>
+            {/* <Route exact path="/messages" element={<MessageForm />}></Route> */}
+            <Route exact path="/posts" element={<Posts user={user} token={token}/>}></Route>
             <Route exact path="/users/register" element={<RegisterForm setToken={setToken}/>}></Route>
             <Route exact path="/profile" element={<ProfilePage Logout={Logout} user={user}></ProfilePage>}></Route>
             <Route exact path="/users/login" element={<LoginForm setToken={setToken} setUser={setUser}/>}></Route>
-            {/* <Route exact path="/leaveMessages">
-              <SentMessages />
-            </Route> */}
+            <Route exact path="/leaveMessage/:postId" element={<SendMessage token={token} />}></Route>
           </Routes>
         </div>
       </div>

@@ -18,7 +18,7 @@ const CreatePost = ({token}) => {
         e.preventDefault();
 
         //WHAT WE SEND TO THE SERVER
-        const addPost = async () => {
+        const fetchToken = async () => {
             const postInfo = await fetch(BASE_URL + cohortName + '/posts', {
                 method:"POST",
                 headers: {
@@ -43,7 +43,7 @@ const CreatePost = ({token}) => {
         }
 
         //CALL function
-        addPost();
+        fetchToken();
         //SET REDIRECT TO true
         setRedirect(true);
 
@@ -51,7 +51,7 @@ const CreatePost = ({token}) => {
 
     //IF TRUE, REDIRECT TO POSTS PAGE
     if (redirect) {
-        //return <Navigate to='/posts' />
+        //return {posts.success === true && <Navigate to='/posts' />}
     }
 
     return (
@@ -65,7 +65,7 @@ const CreatePost = ({token}) => {
                     </div>
                     <div className="form-group">
                         <label htmlFor='description'>Description: </label>
-                        <input type='text' name='description' placeholder='describe item...' id='description' onChange={e => setDescription(e.target.value)}></input>
+                        <textarea type='text' name='description' placeholder='describe item...' id='description' onChange={e => setDescription(e.target.value)}></textarea>
                     </div>
                     <div className="form-group">
                         <label htmlFor='price'>Price: </label>

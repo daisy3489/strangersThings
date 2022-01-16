@@ -60,12 +60,16 @@ function LoginForm ({setToken, setUser}) {
             if(content.success === false) {
                 document.write(content.console.message)
             }
+            else{
+                setRedirect(true)
+            }
         }
 
         //CALL function
         fetchToken()
+        
         //SET REDIRECT TO TRUE 
-        setRedirect(true);
+        //setRedirect(true);
 
     }
 
@@ -78,6 +82,8 @@ function LoginForm ({setToken, setUser}) {
         <form onSubmit={submitHandler}>
             <div className="form-inner">
                 <h2>Login</h2>
+
+                <p className="errorMessage"></p>
 
                 <div className="form-group">
                     <label htmlFor='name' >Username: </label>

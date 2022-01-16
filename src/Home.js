@@ -11,7 +11,8 @@ const HomePage = () => {
                 <button className="btn"><Link to="/posts">See Listings</Link></button>
             </div>
             <div className="col2">
-
+                <img src="/" className="homeImage" alt="" />
+                <div className="colorBox"></div>
             </div>
             
         </div>

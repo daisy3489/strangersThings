@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 export const BASE_URL = 'https://strangers-things.herokuapp.com/api/'
 export const cohortName = '2110-FT-PT-WEB-PT';
 
-const Posts = () => {
+const Posts = ({user, token}) => {
     const [posts, setPosts] = useState([]);
+    const navigate = useNavigate()
 
     console.log('POSTS: ', posts)
 
@@ -21,11 +22,31 @@ const Posts = () => {
         fetchPost()
     }, [])
 
-    //function to delete posts
-    const handleDeletePost = (id) => {
-        const newPost = posts.filter(post => post._id !== id);
-        setPosts(newPost)
+    //function to handle delete 
+    const handleDeletePost = async (id) => {
+            const deletePostInfo = await fetch(BASE_URL + cohortName + '/posts/' + id, {
+                method: "DELETE",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            }).then((response) => {
+                return response.json();
+            })
+            .then(result => {
+                console.log('deletePostinfo result: ', result);
+            })
+            .catch(console.error);
+
+            const newPost = posts.filter(post => post._id !== id);
+            setPosts(newPost);
     }
+
+    
+
+
+
+
 
     return (
         <div className="all-posts-container">
@@ -41,8 +62,8 @@ const Posts = () => {
                         <p className='seller' >Seller: {post.author.username}</p>
                         <p className='location'>Location: {post.location}</p>
                         <div className="postButtons">
-                            <button className="btn delete" onClick={() =>handleDeletePost(post._id)}>Delete Post</button>
-                            <button className='btn message' ><Link to='/leaveMessage'>Leave a Meassage</Link></button>
+                            { post.author._id === user._id && <button className="btn delete" onClick={() =>handleDeletePost(post._id)}>Delete Post</button>}
+                            { post.author._id !== user._id && <button className='btn message' onClick={() => navigate(`/leaveMessage/${post._id}`)}>Leave a Message</button>}
                         </div>
 
                     </div>
