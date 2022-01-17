@@ -1,9 +1,15 @@
 import React, {useState} from 'react';
+//import { useNavigate } from "react-router-dom";
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+// import { faTimes } from '@fortawesome/free-solid-svg-icons';
+// import { faYelp } from '@fortawesome/free-brands-svg-icons';
 
 export const BASE_URL = 'https://strangers-things.herokuapp.com/api/'
 export const cohortName = '2110-FT-PT-WEB-PT';
 
 const CreatePost = ({token}) => {
+    //let navigate = useNavigate();
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -39,23 +45,50 @@ const CreatePost = ({token}) => {
             const content = await postInfo.json();
 
             console.log('CREATE POST CONTENT:', content)
+            console.log('CREATE POST CONTENT.success:', content.success)
 
+            //if post was successfully created, ...
+            if (content.success === true) {
+                //SET REDIRECT TO true
+                setRedirect(true);
+            }
+            else {
+                setRedirect(false)
+            }
         }
 
         //CALL function
         fetchToken();
-        //SET REDIRECT TO true
-        setRedirect(true);
 
     }
+    //add active class to get notification when post successfully entered
+    // function showHide(){
+    //     let element = document.getElementById('success');
+    //     element.addClass('active');
+    //     element.addClass('alert');
+    //     element.removeClass('hide');
+    // }
+    //add/remove classes to hide the notification
+    // function hideCross(){
+    //     let element = document.getElementById('success');
+    //     element.removeClass('show');
+    //     element.addClass('hide');
+    // }
 
     //IF TRUE, REDIRECT TO POSTS PAGE
     if (redirect) {
-        //return {posts.success === true && <Navigate to='/posts' />}
+        //return navigate("/posts" )
     }
 
     return (
         <div className="createPost">
+            {/* success banner */}
+            {/* <div className="success hide" id='success'>
+                <span className="check"><FontAwesomeIcon icon={faCheckCircle}></FontAwesomeIcon></span>
+                <span className="msg">Success: Your Post was successfully created </span>
+                <span className="cross" ><FontAwesomeIcon icon={faTimes}></FontAwesomeIcon></span>
+            </div> */}
+
             <form onSubmit={submitHandler}>
                 <div className="form-inner">
                     <h2>Add new Post</h2>
@@ -79,13 +112,13 @@ const CreatePost = ({token}) => {
                         <label htmlFor='location'>Location: </label>
                         <input type='text' name='location' id='location' onChange={e => setLocation(e.target.value)}></input>
                     </div>
-                    <input type='submit' value='SUBMIT'></input>
+                    <input className="alert-btn" type='submit' value='SUBMIT' ></input>
                 </div>
             </form>
+            
         </div>
     )
 }
 
 export default CreatePost;
 
-//todays burger is THE FUH-GOUDA-BOUT-IT BURGER. comes with IM WOK-IN HERE fries ( gouda and wok fried potatoes) 

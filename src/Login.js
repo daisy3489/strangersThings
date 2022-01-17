@@ -5,7 +5,7 @@ import { Navigate } from 'react-router';
 export const BASE_URL = 'https://strangers-things.herokuapp.com/api/'
 export const cohortName = '2110-FT-PT-WEB-PT'
 
-function LoginForm ({setToken, setUser}) {
+function LoginForm ({setToken}) {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [redirect, setRedirect] = useState(false);
@@ -37,25 +37,12 @@ function LoginForm ({setToken, setUser}) {
             console.log('LOGIN CONTENT: ', content)
 
             const newToken = content.data.token
-            // console.log('TOKEN: ', newToken)
             
             //token will need to be stored on state 
             setToken(newToken);
+
             //save data to local storage
             localStorage.setItem('token', newToken);
-            
-            // const userInfo =  await fetch(BASE_URL + cohortName + '/users/me', {
-            //     headers:{
-            //         'Content-Type': 'application/json',
-            //         'Authorization': `Bearer ${newToken}`
-            //     }
-            // })
-            // const userContent = await userInfo.json();
-
-            // console.log('USERCONTENT: ', userContent)
-
-            // setUser(userContent.data)
-            
 
             if(content.success === false) {
                 document.write(content.console.message)
@@ -67,10 +54,6 @@ function LoginForm ({setToken, setUser}) {
 
         //CALL function
         fetchToken()
-        
-        //SET REDIRECT TO TRUE 
-        //setRedirect(true);
-
     }
 
     //IF TRUE, REDIRECT TO PROFILE PAGE
@@ -87,7 +70,7 @@ function LoginForm ({setToken, setUser}) {
 
                 <div className="form-group">
                     <label htmlFor='name' >Username: </label>
-                                                                         {/* any time we change it, we're calling a function and we're passing it through the event. the event holds the target value. We're updating thr srt details amd we're passing through the new value for name. And that should update the name */}
+                                                                         {/* any time we change it (e), we're calling a function and we're passing it through the event. the event holds the target value. We're updating the srt details amd we're passing through the new value for name. And that should update the name */}
                     <input required type='text' name='name' placeholder='john123' id='name' onChange={e => setName(e.target.value)}></input>
                 </div>
                 <div className="form-group">

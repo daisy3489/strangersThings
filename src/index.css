@@ -135,6 +135,84 @@ button:hover {
   color: white;
   text-decoration: none;
 }
+.success {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  background-color: rgba(106, 168, 126);
+  padding: 18px 0 18px 40px;
+  border-radius: 5px;
+  border-left: 6px solid rgba(28, 78, 28);
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+.success.alert {
+  opacity: 1;
+  pointer-events: auto;
+}
+.success .check {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  font-size: 30px;  
+  color:rgba(3, 71, 3)
+}
+.success .msg {
+  font-size: 18px;
+  color: rgba(32, 90, 32);
+  margin: 0 30px;
+  user-select: none;
+}
+.success .cross {
+  padding: 20px 18px;
+  background-color: rgba(47, 112, 47);
+  font-size: 30px;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  cursor: pointer;
+  transition: 0.4s;
+}
+.success .cross:hover {
+  background-color: rgba(51, 100, 51);
+}
+.success.show {
+  animation: show_slide 1s ease forwards;
+}
+@keyframes show_slide {
+  0%{
+    transform: translateX(100%);
+  }
+  40%{
+    transform: translateX(-10%);
+  }
+  80%{
+    transform: translateX(0%);
+  }
+  100%{
+    transform: translateX(-20px);
+  }
+}
+
+.success.hide {
+  animation: hide_slide 1s ease forwards;
+}
+@keyframes hide_slide {
+  0%{
+    transform: translateX(-10px);
+  }
+  40%{
+    transform: translateX(0%);
+  }
+  80%{
+    transform: translateX(-10%);
+  }
+  100%{
+    transform: translateX(100%);
+  }
+}
 
 /* ===== LOGIN FORM ===== */
 form {
@@ -230,7 +308,7 @@ input[type='checkbox']:checked {
   margin: 20px;
 }
 
-/* WELCOME page */
+/* WELCOME/ PROFILE page */
 .welcome, .logout, .home {
   width: 100%;
   background-color: #ffff;

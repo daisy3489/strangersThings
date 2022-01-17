@@ -14,8 +14,7 @@ const SendMessage = ({token}) => {
 
         //WHAT WE SEND TO THE SERVER
         const leaveMessagePost = async (id) => {
-            console.log('CreateMessage ID:', id)
-
+            
             const postInfo = await fetch( BASE_URL + cohortName + '/posts/'+ id +'/messages', {
                 method: "POST",
                 headers: {
@@ -47,7 +46,6 @@ const SendMessage = ({token}) => {
                 <div className="form-group">
                     <label htmlFor="comment">Leave a Comment: </label>
                     <textarea name="message" type="text" placeholder="cool item bro..." id="message" onChange={e => setmessage(e.target.value)}></textarea>
-
                 </div>
 
                 <input type="submit" value="SUBMIT"></input>

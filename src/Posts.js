@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 export const BASE_URL = 'https://strangers-things.herokuapp.com/api/'
 export const cohortName = '2110-FT-PT-WEB-PT';
@@ -63,7 +63,7 @@ const Posts = ({user, token}) => {
                         <p className='location'>Location: {post.location}</p>
                         <div className="postButtons">
                             { post.author._id === user._id && <button className="btn delete" onClick={() =>handleDeletePost(post._id)}>Delete Post</button>}
-                            { post.author._id !== user._id && <button className='btn message' onClick={() => navigate(`/leaveMessage/${post._id}`)}>Leave a Message</button>}
+                            { token && post.author._id !== user._id && <button className='btn message' onClick={() => navigate(`/leaveMessage/${post._id}`)}>Leave a Message</button>}
                         </div>
 
                     </div>

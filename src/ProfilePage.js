@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom';
-//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 
 const ProfilePage = ({Logout, user}) => {
     console.log('PROFILE USER: ', user)
@@ -17,7 +18,7 @@ const ProfilePage = ({Logout, user}) => {
                         <li className=''>Posts created by me</li>
                         {/* <li><Link to='/myPosts'>Posts created by me</Link></li> */}
                         <li><Link to='/CreatePost'>Create new Post</Link></li>
-                        <li><Link to='/messages'>Message Center </Link></li>
+                        <li><Link to='/viewMessages'>Message Center </Link></li>
                         
                     </ul>
                     <div className="btnDiv">
@@ -27,10 +28,8 @@ const ProfilePage = ({Logout, user}) => {
                 </div>
                 <div className="profile-content">
                     <div className="actions">
-                        {/* <i className="fa fa-cog"></i>
-                        <FontAwesomeIcon icon="cog" />
-                        <i className='fa fa-bell'></i>
-                        <FontAwesomeIcon icon="bell" /> */}
+                        <FontAwesomeIcon icon={faCog}></FontAwesomeIcon>
+                        <FontAwesomeIcon icon={faBell}></FontAwesomeIcon>
                     </div>
                     <div className="pic">
                     <img src='https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png' alt=''></img>
@@ -48,9 +47,7 @@ const ProfilePage = ({Logout, user}) => {
                             <span>items listed</span>
                         </div>
                     </div>
-                    <div className="profile details">
-
-                    </div>
+                    
                     
                 </div>
             </div>
