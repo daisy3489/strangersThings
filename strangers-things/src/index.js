@@ -4,14 +4,12 @@ import LoginForm from './components/LoginForm';
 
 export const BASE_URL = 'https://strangers-things.herokuapp.com/api/';
 export const cohortName = '2105-SJS-RM-WEB-PT';
-export const TOKEN = '';
 
 const App = () => {
   const [posts, setPosts] = useState([])
-  const [user, setUser] = useState({name: '', email: ''});
+  const [username, setUsername] = useState({username: '', email: '', password: ''});
   const [error, setError] = useState('');
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('');
+  // const [password, setPassword] = useState('');
 
   console.log('posts:', posts)
 
@@ -48,12 +46,13 @@ const App = () => {
     console.log('details:', details);
 
     //if what we typed matches our saved example, then we're logged in
-    if (details.email === adminUser.email && details.password === adminUser.password) {
+    if (details.email === adminUser.email && details.password === adminUser.password && details.verifyPassword === details.password) {
       console.log("Logged in successfully")
       //actually login
-      setUser({
-        name: details.name,
-        email: details.email
+      setUsername({
+        username: details.name,
+        email: details.email,
+        password: details.password
       });
     }
     else {
@@ -65,8 +64,8 @@ const App = () => {
   //function to logout
   const Logout = () => {
     console.log('logout')
-    setUser({
-      name: '', 
+    setUsername({
+      username: '', 
       email: ''
     });
   }
@@ -75,28 +74,35 @@ const App = () => {
 
 
 
-  return <div>
-    {/* display posts */}
-    {posts.map(post => <div>
-      <h2>{post.title}</h2>
-      <div >Description: {post.description} </div>
-      <div > Price: {post.price} </div>
-      <div > Seller: {post.author.username} </div>
-      <div >  Location: {post.location} </div>
+  return <div  className='all-posts-container'>
+    {/* DISPLAY POSTS */}
+    {posts.map(post => <div className='all-posts-container' key={post._id}>
+      <div className='single-post-card'>  
+        <div className='header-info'>
+          <h2>{post.title}</h2>
+        </div>
+        <p className="description" >Description: {post.description} </p>
+        <p className="price"> Price: {post.price} </p>
+        <p className='seller' > Seller: {post.author.username} </p>
+        <p className='location'>  Location: {post.location} </p>
+      </div>
+      
     </div>)}
 
-    {/* login page */}
+    {/* LOGIN PAGE */}
     <div>
-      {/* if user email is filled, render welcom screen, else if not logged in, display login form */}
-      {(user.email !== '') ? (
+      {/* if user email is not empty, render welcome screen, else if not logged in, display login form */}
+      {(username.email !== '') ? (
         <div className="welcome"> 
-          <h2>Welcome, <span>{user.name}</span>!</h2>
+          <h2>Welcome, <span>{username.username}</span>!</h2>
           <button onClick={Logout}>Logout</button>
         </div>
       ): (
         <LoginForm Login={Login} error={error} />
       )}
     </div>
+
+
   </div>
 }
 
